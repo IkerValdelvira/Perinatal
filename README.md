@@ -2,7 +2,7 @@
 
 Software developed to carry out ***PERINATAL project***. Here you will find all the scripts developed during this research work with the following objective: the creation of birth weight classifier (LOW, NORMAL or HIGH weight) using predictor variables prior to childbirth and socioeconomic variables of the mother and father. The predictive model is trained with the data of all births in Spain between the years 1996 and 2019.
 
-Weight classification is done as follows:
+Weight classification is done as follows (class *'pesorec'*) :
 * LOW weight: <2500g
 * NORMAL weight: \[2500g, 4000g\]
 * HIGH weight: >4000g
@@ -75,61 +75,43 @@ Finally, to add the variables *'fumam'* / *'fumap'* / *'alcoholm'* / *'alcoholp'
 * ***PreprocessAndExperiments/ENSE/add_ense_features_to_perinatal.py***: Script to add to Perinatal dataset new predictions of ENSE features: *'fumam'* (mother's tobacco use), *'fumap'* (father's tobacco use), *'alcoholm'* (mother's alcohol use), and *'alcoholp'* (father's alcohol use). Usage example: *$python add_ense_features_to_perinatal.py dataENSE2017_converted.csv dataENSE2017_compatible_m.csv dataENSE2017_compatible_p.csv dataPerinatal_predicted.csv -o pathTo/PerinatalWithENSE*
 
 
-The rest of scripts in *PreprocessAndExperiments* package belong to experiments carried out for the creation of predictive models of birth weight and some variables of the ENSE 2017.
+The rest of scripts in *PreprocessAndExperiments* package belong to experiments carried out for the creation of birth weight predictive models and predictions in some variables of the ENSE 2017.
 
 
 ### *TrainAndPredict* package scripts:
 
-* ***musexmlex.py***: Script to extract an 12-lead ECG rhythm strip from a MUSE(R) XML file. It converts MUSE-XML files to CSV files. Credits to [***PROJECT: musexmlexport***](https://github.com/rickead/musexmlexport).
+The two scripts to train a birth weight predictive model with a specific dataset and make predictions in new items are saved in this package.
 
-* ***train_models.py***: Script to train and evaluate different AF classification models based on 12-lead ECGs: XGBoost, FCN, FCN+MLP(age,sex), Encoder, Encoder+MLP(age,sex), FCN+Encoder, FCN+Encoder+MLP(age,sex) or LSTM.
+* ***TrainAndPredict/train_model_pesorec.py***: Script to train a 'pesorec' classification model with the entered dataset, and using RandomForest and/or optimized DNN. Resampling techniques can be applied like oversampling, undersampling and over/undersampling. Usage example: *$python train_model_pesorec.py dataPerinatal.csv -a DNN -o pathTo/ModelFolder*
 
-* ***train_FCN_MLP_CV.py***: Script to train FCN+MLP(age,sex) AF classification model based on 12-lead ECGs and evaluate it via 10-fold Cross Validation.
-
-* ***reductionFCN_MLP.py***: Script in which the AF classification model development experiment is performed by reducing the number of training ECGs. FCN+MLP(age,sex) classification algorithm is used.
+* ***TrainAndPredict/make_predictions_pesorec.py***: Script to make predictions on new input items using a 'pesorec' predictive model. Usage example: *$python make_predictions_pesorec.py new_items.csv pathTo/ModelFolder -o pathTo/Predictions*
 
 
-## TUTORIAL: Getting PRAFAI predictive model and making predictions on new items:
+## TUTORIAL: Making predictions using trained models:
 
-This section explains how to obtain the final predictive model and make predictions on new data.
+This section explains how to make birth weight predictions on new data using one of the trained 'pesorec' models.
 
-**1. CREATE PRAFAI DATASET**
+**1. SELECT ONE OF THE TRAINED BIRTH WEIGHT MODELS**
 
-```
-$ python PRAFAI/dataset_creation.py INPUT_DIR -o OUTPUT_DIR
-```
-
-**2. TRAIN AND GET PRAFAI PREDICTIVE MODEL**
-
-```
-$ python PRAFAI/best_model.py PATH_TO/dataset.csv -o OUTPUT_DIR
-```
-A folder called ***FinalModel*** will be created, among others, which contains the model and necessary files to make new predictions.
+Trained models are located in the [***models***](https://github.com/IkerValdelvira/Perinatal/blob/master/models/) directory. For example, we are going to use the model with the socioeconomic features of Perinatal dataset and added features related to tobacco and alcohol use predicted from the ENSE 2017 dataset: [***'pesorec' model with ENSE features***](https://github.com/IkerValdelvira/Perinatal/blob/master/models/Models_Pesorec_ENSE/Model)
 
 
-**3. MAKE PREDICTIONS ON NEW ITEMS**
+**2. CREATE CSV FILE CONTAINING NEW ITEMS TO PREDICT**
 
-To make a prediction on a new item, the PRAFAI model needs the values of the following 30 features:
+We have to create a file in CSV format with the instances we want to classify. Inside the folder of each model, there is an example CSV to insert the new instances to predict, which can be used as a template. For the [***'pesorec' model with ENSE features***](https://github.com/IkerValdelvira/Perinatal/blob/master/models/Models_Pesorec_ENSE/Model) example, we have [**this template**](https://github.com/IkerValdelvira/Perinatal/blob/master/models/Models_Pesorec_ENSE/new_items_withENSE.csv) .
 
-* Numeric features:<br />**'potasio'**, **'no_hdl'**, **'colesterol'**, **'ntprobnp'**, **'vsg'**, **'fevi'**, **'diametro_ai'**, **'area_ai'**, **'numero_dias_desde_ingreso_hasta_evento'**, **'numero_dias_ingresado'** and **'edad'**.
-
-* Binary features:<br />**'ablacion'**, **'ansiedad'**, **'demencia'**, **'sahos'**, **'hipertiroidismo'**, **'cardiopatia_isquemica'**, **'valvula_mitral_reumaticas'**, **'genero'**, **'pensionista'**, **'residenciado'**, **'n05a'**, **'n05b'**, **'c01'**, **'c01b'**, **'c02'**, **'c04'**, **'c09'**, **'c10'** and **'polimedicacion'**.
-
-\* In **'genero'** (genre) feature **female** is set as **0** and **male** is set as **1**.
-<br />\* The new items that are introduced can have missing values in any of the features. These missing values will be automatically handled to make the predictions, but the fewer missing values there are, the more reliable the predictions will be.
-
-The new items to be predicted must be introduced in a **CSV file** delimited by comma (**,**). The first column (index) must be the ID of the new item. A template and example of this CSV file is available at: [new_items_template.csv](https://github.com/IkerValdelvira/TFG_PRAFAI/blob/master/templates/new_items_template.csv) and [new_items_example.csv](https://github.com/IkerValdelvira/TFG_PRAFAI/blob/master/templates/new_items_example.csv).
-
-Following image shows the structure of a CSV file with some new items to be predicted ([new_items_example.csv](https://github.com/IkerValdelvira/TFG_PRAFAI/blob/master/templates/new_items_example.csv)):
+Following image shows the structure of the CSV file with some new items to be predicted:
 
 ![alt text](https://github.com/IkerValdelvira/TFG_PRAFAI/blob/master/example_images/new_items_example.png?raw=true)
 
-To make the predictions, the following script must be executed:
+**3. MAKE PREDICTIONS ON NEW ITEMS**
+
+Once we have the predictive model and the corresponding CSV file with new items, the following script must be executed to make the predictions:
 ```
-$ python PRAFAI/make_predictions.py PATH_TO/new_items_example.csv PATH_TO/FinalModel -o OUTPUT_DIR
+$ python TrainAndPredict/make_predictions_pesorec.py PATH_TO/new_items_withENSE.csv PATH_TO/ModelFoldel -o OUTPUT_DIR
 ```
 
-A file called ***PREDICTIONS.txt*** will be created, which contains the predictions made by the model on new input items. In this file appears the ID (index) of each new item introduced together with the outcome of the model (prediction) and its probability. Following image shows the output *PREDICTIONS.txt* file after having introduced [new_items_example.csv](https://github.com/IkerValdelvira/TFG_PRAFAI/blob/master/templates/new_items_example.csv):
+A file called ***PREDICTIONS.txt*** will be created, which contains the predictions made by the model on new input items. In this file appears the ID (index) of each new item introduced together with the outcome of the model (prediction). Following image shows the output *PREDICTIONS.txt* file after having introduced [***new_items_withENSE.csv***](https://github.com/IkerValdelvira/Perinatal/blob/master/models/Models_Pesorec_ENSE/new_items_withENSE.csv):
 
 ![alt text](https://github.com/IkerValdelvira/TFG_PRAFAI/blob/master/example_images/predictions_example.png?raw=true)
 
