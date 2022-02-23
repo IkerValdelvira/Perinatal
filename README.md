@@ -7,6 +7,8 @@ Weight classification is done as follows:
 * NORMAL weight: \[2500g, 4000g\]
 * HIGH weight: >4000g
 
+Further predictive models have been trained adding some predicted variables from the ENSE 2017 (National Health Survey of Spain in 2017): mother's tobacco use, father's tobacco use, mother's alcohol use, and father's alcohol use.
+
 ## Table of Contents
 1. [Prerequisites](#prerequisites)
 2. [Software description and usage](#software-description-and-usage)
