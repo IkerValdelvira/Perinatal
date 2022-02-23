@@ -99,7 +99,7 @@ Trained models are located in the [***models***](https://github.com/IkerValdelvi
 
 **2. CREATE CSV FILE CONTAINING NEW ITEMS TO PREDICT**
 
-We have to create a file in CSV format with the instances we want to classify. Inside the folder of each model, there is an example CSV to insert the new instances to predict, which can be used as a template. For the [***'pesorec' model with ENSE features***](https://github.com/IkerValdelvira/Perinatal/blob/master/models/Models_Pesorec_ENSE/Model) example, we have [**this template**](https://github.com/IkerValdelvira/Perinatal/blob/master/models/Models_Pesorec_ENSE/new_items_withENSE.csv) .
+We have to create a file in CSV format with the instances we want to classify. Inside the folder of each model, there is an example CSV to insert the new instances to predict, which can be used as a template. For the [***'pesorec' model with ENSE features***](https://github.com/IkerValdelvira/Perinatal/blob/master/models/Models_Pesorec_ENSE/Model) example, we have [this template](https://github.com/IkerValdelvira/Perinatal/blob/master/models/Models_Pesorec_ENSE/new_items_withENSE.csv) .
 
 Following image shows the structure of the CSV file with some new items to be predicted:
 
@@ -118,6 +118,13 @@ A file called ***PREDICTIONS.txt*** will be created, which contains the predicti
 
 
 ## PROTOTYPES: Trained and saved models:
+
+Prototypes of predictive models trained are saved in [***models***](https://github.com/IkerValdelvira/Perinatal/blob/master/models/) folder. Each model has a template CSV to introduce new items that you would like to predict, for example: [***new_items.csv***](https://github.com/IkerValdelvira/Perinatal/blob/master/models/Models_Pesorec/Models_OriginalDistribution/new_items.csv).
+
+* [***Models_Pesorec***](https://github.com/IkerValdelvira/Perinatal/blob/master/models/Models_Pesorec)
+* [***Models_Pesorec_PesonSemanas***](https://github.com/IkerValdelvira/Perinatal/blob/master/models/Models_Pesorec_PesonSemanas)
+* [***Models_Pesorec_PesoSemanaXX***](https://github.com/IkerValdelvira/Perinatal/blob/master/models/Models_Pesorec_PesoSemanaXX)
+* [***Models_Pesorec_ENSE***](https://github.com/IkerValdelvira/Perinatal/blob/master/models/Models_Pesorec_ENSE)
 
 
 ## Project documentation:
