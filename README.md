@@ -102,7 +102,7 @@ We have to create a file in CSV format with the instances we want to classify. I
 
 Following image shows the structure of the CSV file with some new items to be predicted:
 
-![alt text](https://github.com/IkerValdelvira/TFG_PRAFAI/blob/master/example_images/new_items_example.png?raw=true)
+![alt text](https://github.com/IkerValdelvira/Perinatal/blob/master/example_images/new_items_example.png?raw=true)
 
 **3. MAKE PREDICTIONS ON NEW ITEMS**
 
@@ -113,7 +113,7 @@ $ python TrainAndPredict/make_predictions_pesorec.py PATH_TO/new_items_withENSE.
 
 A file called ***PREDICTIONS.txt*** will be created, which contains the predictions made by the model on new input items. In this file appears the ID (index) of each new item introduced together with the outcome of the model (prediction). Following image shows the output *PREDICTIONS.txt* file after having introduced [***new_items_withENSE.csv***](https://github.com/IkerValdelvira/Perinatal/blob/master/models/Models_Pesorec_ENSE/new_items_withENSE.csv):
 
-![alt text](https://github.com/IkerValdelvira/TFG_PRAFAI/blob/master/example_images/predictions_example.png?raw=true)
+![alt text](https://github.com/IkerValdelvira/Perinatal/blob/master/example_images/predictions_example.png?raw=true)
 
 
 ## Project documentation:
