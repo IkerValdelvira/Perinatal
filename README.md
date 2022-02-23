@@ -14,9 +14,10 @@ Further predictive models have been trained adding some predicted variables from
 2. [Software description and usage](#software-description-and-usage)
 <br />2.1. [*PreprocessAndExperiments* package scripts](#preprocessandexperiments-package-scripts)
 <br />2.2. [*TrainAndPredict* package scripts](#trainandpredict-package-scripts)
-3. [TUTORIAL: Getting PRAFAI predictive model and making predictions on new items](#tutorial-getting-prafai-predictive-model-and-making-predictions-on-new-items)
-4. [Project documentation](#project-documentation)
-5. [Author and contact](#author-and-contact)
+3. [TUTORIAL: Making predictions using trained models](#tutorial-making-predictions-using-trained-models)
+4. [PROTOTYPES: Trained and saved models](#prototypes-trained-and-saved-models)
+5. [Project documentation](#project-documentation)
+6. [Author and contact](#author-and-contact)
 
 ## Prerequisites:
 
@@ -114,6 +115,9 @@ $ python TrainAndPredict/make_predictions_pesorec.py PATH_TO/new_items_withENSE.
 A file called ***PREDICTIONS.txt*** will be created, which contains the predictions made by the model on new input items. In this file appears the ID (index) of each new item introduced together with the outcome of the model (prediction). Following image shows the output *PREDICTIONS.txt* file after having introduced [***new_items_withENSE.csv***](https://github.com/IkerValdelvira/Perinatal/blob/master/models/Models_Pesorec_ENSE/new_items_withENSE.csv):
 
 ![alt text](https://github.com/IkerValdelvira/Perinatal/blob/master/example_images/predictions_example.png?raw=true)
+
+
+## PROTOTYPES: Trained and saved models:
 
 
 ## Project documentation:
