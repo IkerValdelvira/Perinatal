@@ -1,14 +1,17 @@
-# TFG-PRAFAI
+# PERINATAL
 
-Software developed to carry out the End-of-Degree Project ***PRAFAI (Prediction of Recurrence of Atrial Fibrillation using Artificial Intelligence)***. Here you will find all the scripts developed during this research work with the following objectives: the creation of a dataset joining the necessary information of each patient of the involved HMO (Health Maintenance Organization) hospital with a first atrial fibrillation episode beetwen 2015 and 2018, and Artificial Intelligence and Machine Learning tasks for developing the predictive tool of AF recurrence like data pre-processing, choice of supervised learning algorithms, implementation and generation of predictive models, results evaluation and most important predictive variables analysis.
+Software developed to carry out ***PERINATAL project***. Here you will find all the scripts developed during this research work with the following objective: the creation of birth weight classifier (LOW, NORMAL or HIGH weight) using predictor variables prior to childbirth and socioeconomic variables of the mother and father. The predictive model is trained with the data of all births in Spain between the years 1996 and 2019.
 
-The software used in the secondary objective to develop a predictive model of AF recurrence using 12-lead ECGs is also available. More specifically, there is the software used in experiments to classify ECGs with AF or normal sinus rhythm on the [*ECG recording from Chapman University and Shaoxing People’s Hospital*](https://www.nature.com/articles/s41597-020-0386-x) database.
+Weight classification is done as follows:
+* LOW weight: <2500g
+* NORMAL weight: \[2500g, 4000g\]
+* HIGH weight: >4000g
 
 ## Table of Contents
 1. [Prerequisites](#prerequisites)
 2. [Software description and usage](#software-description-and-usage)
-<br />2.1. [PRAFAI package scripts](#prafai-package-scripts)
-<br />2.2. [PRAFAI_ECG package scripts](#prafai_ecg-package-scripts)
+<br />2.1. [*PreprocessAndExperiments* package scripts](#preprocessandexperiments-package-scripts)
+<br />2.2. [*TrainAndPredict* package scripts](#trainandpredict-package-scripts)
 3. [TUTORIAL: Getting PRAFAI predictive model and making predictions on new items](#tutorial-getting-prafai-predictive-model-and-making-predictions-on-new-items)
 4. [Project documentation](#project-documentation)
 5. [Author and contact](#author-and-contact)
@@ -17,19 +20,20 @@ The software used in the secondary objective to develop a predictive model of AF
 
 It is recommended to use the application in an environment with **Python 3.8** and the installation of the following packages is required:
 
-* python-dateutil==2.8.2
-* scikit-learn==0.24.1
+* imbalanced_learn==0.8.1
+* imblearn==0.0
 * joblib==1.1.0
 * keras==2.7.0
-* lightgbm==3.3.0
+* keras_tuner==1.1.0
 * matplotlib==3.4.3
 * numpy==1.21.3
 * pandas==1.3.4
+* scikit_learn==1.0.2
 * seaborn==0.11.2
 * tabulate==0.8.9
 * tensorflow==2.7.0
 * tensorflow_addons==0.15.0
-* xgboost==1.5.0
+* openpyxl==3.0.9
 
 To install the necessary packages with the corresponding versions automatically, execute the following command:
 
@@ -42,33 +46,37 @@ $ pip install -r requirements.txt
 There is a help option that shows the usage of each script in the application, e.g. in *dataset_creation.py* script:
 
 ```
-$ python PRAFAI/dataset_creation.py -h
+$ python PreprocessAndExperiments/dataset_creation.py -h
 ```
   
-### PRAFAI package scripts:
+### *PreprocessAndExperiments* package scripts:
+In this package are scripts for the data preprocessing and scripts to execute all the experiments carried out.
 
-* ***dataset_creation.py***: Script to create the PRAFAI dataset. Input folder with necessary files is needed.
+For example, the following two scripts are needed to create the Perinatal datasets pre-processed and ready to train the predictive models:
 
-* ***dataset_analysis.py***: Script to get distribution histograms of each feature with in regard to the class.
+* ***PreprocessAndExperiments/dataset_creation.py***: Script to create the Perinatal dataset. Usage example: *$python PreprocessAndExperiments/dataset_creation.py dataPerinatal.csv -o pathTo/Perinatal*
 
-* ***split_mvimputation.py***: Script to divide the dataset into Train/Test subsets (80%/20%) and imputation of missing values in numeric features. Only labeled items will be taken. Different techniques are available for the imputation of missing values: arithmetic mean, median, prediction by linear regression or different value.
-
-* ***standardization_normalization.py***: Script to standardize/normalize numeric features of the training set (Train) and apply the same rescaling to the testing set (Test). Different techniques are available for standardization/normalization: StandardScaler, MinMaxScaler, MaxAbsScaler, QuantileTransformer or Normalizer.
-
-* ***preprocessing.py***: Script to divide the dataset into Train/Test subsets (80%/20%), imputate missing values in numeric features and standardize/normalize numeric features of the training set (Train), and apply the same imputation and rescaling to the testing set (Test). Only labeled items will be taken. Different techniques are available for the imputation of missing values: arithmetic mean, median, prediction by linear regression or different value. Different techniques are available for standardization/normalization: StandardScaler, MinMaxScaler, MaxAbsScaler, QuantileTransformer or Normalizer.
-
-* ***feature_selection.py***: Script to perform feature selection or dimensionality reduction on training set and apply it to the test set. Different techniques are available for feature selection: RFE, Lasso_SelectFromModel, Trees_SelectFromModel, SFS and SelectKBest. The available technique for dimensionality reduction is PCA.
-
-* ***feature_importance.py***: Script to get feature importance of training set. Different techniques and classifiers are available for getting feature importance: LogisticRegression, CART, RandomForest, XGBoost, Permutation_RandomForest and Permutation_KNN. Heatmaps of feature correlation matrices are also available.
-
-* ***classifiers.py***: Script to train a model and evaluate it on validation and test sets. Different machine learning algorithms are available for model training: DecisionTree, LogisticRegression, KNN, NaiveBayes, Perceptron, MultilayerPerceptron, SVM, RandomForest, XGBoost, LightGBM, Bagging and AdaBoost.
-
-* ***best_model.py***: Script to achieve the optimal AF recurrence predictive model on PRAFAI dataset. Following preprocessing techniques are appied to training set: elimination of features with at least 85% of missing values, imputation of missing values by median in numeric features, standardization of numeric features by StandardScaler and feature selection by RFE method. The predictive model is trained using SVM algorithm with a second-degree polynomial kernel. Finally, model evaluation is carried out on validation and test sets, as well as predictions made by the model on test items never seen before. A final model merging Train and Test sets is trained and saved for new predictions.
-
-* ***make_predictions.py***: Script to make predictions on new input items using PRAFAI predictive model.
+* ***PreprocessAndExperiments/dataset_preprocessing.py***: Script to preprocess Perinatal dataset. 3 dataset will be created: 'dataPerinatal_remove_items.csv' removing all items with missing values, 'dataPerinatal_remove_features.csv' removing features with missing values, and 'dataPerinatal_predicted.csv' predicting missing values. Usage example: *$python dataset_preprocessing.py dataPerinatal_converted.csv -o pathTo/Preprocess*
 
 
-### PRAFAI_ECG package scripts:
+To create ENSE 2017 dataset and sets with classes *'fuma'* / *'alcohol'* compatible with Perinatal dataset following scripts are needed:
+
+* ***PreprocessAndExperiments/ENSE/ense_dataset_creation.py***: Script to create the ENSE dataset, and datasets with features compatibles with Perinatal dataset. Usage example: *$python ense_dataset_creation.py dataENSE2017.txt -o pathTo/ENSE*
+
+* ***PreprocessAndExperiments/ENSE/ense_fuma_datasets_creation.py***: Script to create the ENSE datasets with *'fuma'* class for women (mothers) and men (fathers). Two datasets are created for each sex: one containing all features of ENSE dataset, and other only with features compatibles with Perinatal dataset. Usage example: *$python ense_fuma_datasets_creation.py dataENSE2017_converted.csv dataENSE2017_compatible_m.csv dataENSE2017_compatible_p.csv -o pathTo/FumaDatasets*
+
+* ***PreprocessAndExperiments/ENSE/ense_alcohol_datasets_creation.py***: Script to create the ENSE datasets with *'alcohol'* class for women (mothers) and men (fathers). Two datasets are created for each sex: one containing all features of ENSE dataset, and other only with features compatibles with Perinatal dataset. Usage example: *$python ense_alcohol_datasets_creation.py dataENSE2017_converted.csv dataENSE2017_compatible_m.csv dataENSE2017_compatible_p.csv -o pathTo/AlcoholDatasets*
+
+
+Finally, to add the variables *'fumam'* / *'fumap'* / *'alcoholm'* / *'alcoholp'* from the ENSE 2017 to the Perinatal data set, it is necessary to execute the following script:
+
+* ***PreprocessAndExperiments/ENSE/add_ense_features_to_perinatal.py***: Script to add to Perinatal dataset new predictions of ENSE features: *'fumam'* (mother's tobacco use), *'fumap'* (father's tobacco use), *'alcoholm'* (mother's alcohol use), and *'alcoholp'* (father's alcohol use). Usage example: *$python add_ense_features_to_perinatal.py dataENSE2017_converted.csv dataENSE2017_compatible_m.csv dataENSE2017_compatible_p.csv dataPerinatal_predicted.csv -o pathTo/PerinatalWithENSE*
+
+
+The rest of scripts in *PreprocessAndExperiments* package belong to experiments carried out for the creation of predictive models of birth weight and some variables of the ENSE 2017.
+
+
+### *TrainAndPredict* package scripts:
 
 * ***musexmlex.py***: Script to extract an 12-lead ECG rhythm strip from a MUSE(R) XML file. It converts MUSE-XML files to CSV files. Credits to [***PROJECT: musexmlexport***](https://github.com/rickead/musexmlexport).
 
