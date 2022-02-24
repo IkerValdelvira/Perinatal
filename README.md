@@ -88,7 +88,7 @@ The two scripts to train a birth weight predictive model with a specific dataset
 * ***TrainAndPredict/make_predictions_pesorec.py***: Script to make predictions on new input items using a 'pesorec' predictive model. Usage example: *$python make_predictions_pesorec.py new_items.csv pathTo/ModelFolder -o pathTo/Predictions*
 
 
-## TUTORIAL: Making predictions using trained models:
+## TUTORIAL: Making predictions using trained models
 
 This section explains how to make birth weight predictions on new data using one of the trained 'pesorec' models.
 
@@ -117,19 +117,19 @@ A file called ***PREDICTIONS.txt*** will be created, which contains the predicti
 ![alt text](https://github.com/IkerValdelvira/Perinatal/blob/master/example_images/predictions_example.png?raw=true)
 
 
-## PROTOTYPES: Trained and saved models:
+## PROTOTYPES: Trained and saved models
 
-Prototypes of predictive models trained are saved in [***models***](https://github.com/IkerValdelvira/Perinatal/blob/master/models/) folder. Each model has a template CSV to introduce new items that you would like to predict, for example: [***new_items.csv***](https://github.com/IkerValdelvira/Perinatal/blob/master/models/Models_Pesorec/Models_OriginalDistribution/new_items.csv).
+Prototypes of predictive models trained are saved in [***models***](https://github.com/IkerValdelvira/Perinatal/blob/master/models/) folder. Each model has a CSV template to introduce new items to be predicted, for example: [***new_items.csv***](https://github.com/IkerValdelvira/Perinatal/blob/master/models/Models_Pesorec/Models_OriginalDistribution/new_items.csv).
 
-* [***Models_Pesorec***](https://github.com/IkerValdelvira/Perinatal/blob/master/models/Models_Pesorec)
-* [***Models_Pesorec_PesonSemanas***](https://github.com/IkerValdelvira/Perinatal/blob/master/models/Models_Pesorec_PesonSemanas)
-* [***Models_Pesorec_PesoSemanaXX***](https://github.com/IkerValdelvira/Perinatal/blob/master/models/Models_Pesorec_PesoSemanaXX)
-* [***Models_Pesorec_ENSE***](https://github.com/IkerValdelvira/Perinatal/blob/master/models/Models_Pesorec_ENSE)
+* [***Models_Pesorec***](https://github.com/IkerValdelvira/Perinatal/blob/master/models/Models_Pesorec): In this folder, all *'pesorec'* (birth weight) predictive models trained with the original Perinatal dataset are saved. Different models depend on the data distribution used for their training: original distribution, oversampling, undersampling, oversampling (10%) / undersampling (50%), and multiple custom undersampling.
+* [***Models_Pesorec_PesonSemanas***](https://github.com/IkerValdelvira/Perinatal/blob/master/models/Models_Pesorec_PesonSemanas): A *'pesorec'* (birth weight) predictive model adding *peson_semanas* feature is saved in this folder. This *fake feature* represents the weight gain of the fetus per week, assuming weight and time of pregnancy were linear.
+* [***Models_Pesorec_PesoSemanaXX***](https://github.com/IkerValdelvira/Perinatal/blob/master/models/Models_Pesorec_PesoSemanaXX): *peso_semana_XX* feature has been added to *'pesorec'* (birth weight) predictive models in this folder, which calculates an estimate of fetus weight in week XX. Two types of models have been trained: a baseline only with the age of the mother, and another model adding Perinatal socioeconomic features.
+* [***Models_Pesorec_ENSE***](https://github.com/IkerValdelvira/Perinatal/blob/master/models/Models_Pesorec_ENSE): In this folder, *'pesorec'* (birth weight) predictive model trained with original features of Perintal dataset and adding predicted features from the ENSE 2017 dataset is saved. Added features are indicators of tobacco and alcohol use by newborn's mother and father.
 
 
 ## Project documentation:
 
-The documentation describing the work in this project can be found here: [TFG_PRAFAI_Memoria_IkerValdelvira.pdf](https://github.com/IkerValdelvira/TFG_PRAFAI/blob/master/documentation/TFG_PRAFAI_Memoria_IkerValdelvira.pdf)
+The documentation describing the work in this project can be found here: [Documentacion_Perinatal_IkerValdelvira.pdf](https://github.com/IkerValdelvira/Perinatal/blob/master/documentation/Documentacion_Perinatal_IkerValdelvira.pdf)
 
 
 ## Author and contact:
