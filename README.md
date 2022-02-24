@@ -14,9 +14,10 @@ Further predictive models have been trained adding some predicted variables from
 2. [Software description and usage](#software-description-and-usage)
 <br />2.1. [*PreprocessAndExperiments* package scripts](#preprocessandexperiments-package-scripts)
 <br />2.2. [*TrainAndPredict* package scripts](#trainandpredict-package-scripts)
-3. [TUTORIAL: Getting PRAFAI predictive model and making predictions on new items](#tutorial-getting-prafai-predictive-model-and-making-predictions-on-new-items)
-4. [Project documentation](#project-documentation)
-5. [Author and contact](#author-and-contact)
+3. [TUTORIAL: Making predictions using trained models](#tutorial-making-predictions-using-trained-models)
+4. [PROTOTYPES: Trained and saved models](#prototypes-trained-and-saved-models)
+5. [Project documentation](#project-documentation)
+6. [Author and contact](#author-and-contact)
 
 ## Prerequisites:
 
@@ -98,7 +99,7 @@ Trained models are located in the [***models***](https://github.com/IkerValdelvi
 
 **2. CREATE CSV FILE CONTAINING NEW ITEMS TO PREDICT**
 
-We have to create a file in CSV format with the instances we want to classify. Inside the folder of each model, there is an example CSV to insert the new instances to predict, which can be used as a template. For the [***'pesorec' model with ENSE features***](https://github.com/IkerValdelvira/Perinatal/blob/master/models/Models_Pesorec_ENSE/Model) example, we have [**this template**](https://github.com/IkerValdelvira/Perinatal/blob/master/models/Models_Pesorec_ENSE/new_items_withENSE.csv) .
+We have to create a file in CSV format with the instances we want to classify. Inside the folder of each model, there is an example CSV to insert the new instances to predict, which can be used as a template. For the [***'pesorec' model with ENSE features***](https://github.com/IkerValdelvira/Perinatal/blob/master/models/Models_Pesorec_ENSE/Model) example, we have [this template](https://github.com/IkerValdelvira/Perinatal/blob/master/models/Models_Pesorec_ENSE/new_items_withENSE.csv) .
 
 Following image shows the structure of the CSV file with some new items to be predicted:
 
@@ -114,6 +115,16 @@ $ python TrainAndPredict/make_predictions_pesorec.py PATH_TO/new_items_withENSE.
 A file called ***PREDICTIONS.txt*** will be created, which contains the predictions made by the model on new input items. In this file appears the ID (index) of each new item introduced together with the outcome of the model (prediction). Following image shows the output *PREDICTIONS.txt* file after having introduced [***new_items_withENSE.csv***](https://github.com/IkerValdelvira/Perinatal/blob/master/models/Models_Pesorec_ENSE/new_items_withENSE.csv):
 
 ![alt text](https://github.com/IkerValdelvira/Perinatal/blob/master/example_images/predictions_example.png?raw=true)
+
+
+## PROTOTYPES: Trained and saved models:
+
+Prototypes of predictive models trained are saved in [***models***](https://github.com/IkerValdelvira/Perinatal/blob/master/models/) folder. Each model has a template CSV to introduce new items that you would like to predict, for example: [***new_items.csv***](https://github.com/IkerValdelvira/Perinatal/blob/master/models/Models_Pesorec/Models_OriginalDistribution/new_items.csv).
+
+* [***Models_Pesorec***](https://github.com/IkerValdelvira/Perinatal/blob/master/models/Models_Pesorec)
+* [***Models_Pesorec_PesonSemanas***](https://github.com/IkerValdelvira/Perinatal/blob/master/models/Models_Pesorec_PesonSemanas)
+* [***Models_Pesorec_PesoSemanaXX***](https://github.com/IkerValdelvira/Perinatal/blob/master/models/Models_Pesorec_PesoSemanaXX)
+* [***Models_Pesorec_ENSE***](https://github.com/IkerValdelvira/Perinatal/blob/master/models/Models_Pesorec_ENSE)
 
 
 ## Project documentation:
