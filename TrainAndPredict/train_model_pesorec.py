@@ -26,7 +26,7 @@ pd.options.mode.chained_assignment = None  # default='warn'
 warnings.simplefilter(action='ignore', category=UserWarning)
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
-def preprocess(train, resample, output_dir):
+def preprocess(train, resample, algorithm, output_dir):
     # Eliminar todas las clases menos 'pesorec'
     if 'lbw' in train.columns:
         train = train.drop('lbw', 1)
@@ -52,9 +52,17 @@ def preprocess(train, resample, output_dir):
     scaler.fit(X_train)
     X_train = scaler.transform(X_train)
     X_train = pd.DataFrame(X_train, columns=column_names, index=indices)
-    joblib.dump(scaler, os.path.join(output_dir, "RandomForest", 'std_scaler_pesorec.bin'), compress=True)
-    joblib.dump(scaler, os.path.join(output_dir, "DeepNeuralNetwork", 'std_scaler_pesorec.bin'), compress=True)
-    print("\tStandard scaler saved in: " + str(os.path.join(output_dir, "[algorithm]", 'std_scaler_pesorec.bin')))
+    if (algorithm == 'RF'):
+        joblib.dump(scaler, os.path.join(output_dir, "RandomForest", 'std_scaler_pesorec.bin'), compress=True)
+        print("\tStandard scaler saved in: " + str(os.path.join(output_dir, "RandomForest", 'std_scaler_pesorec.bin')))
+    elif (algorithm == 'DNN'):
+        joblib.dump(scaler, os.path.join(output_dir, "DeepNeuralNetwork", 'std_scaler_pesorec.bin'), compress=True)
+        print("\tStandard scaler saved in: " + str(os.path.join(output_dir, "DeepNeuralNetwork", 'std_scaler_pesorec.bin')))
+    else:
+        joblib.dump(scaler, os.path.join(output_dir, "RandomForest", 'std_scaler_pesorec.bin'), compress=True)
+        print("\tStandard scaler saved in: " + str(os.path.join(output_dir, "RandomForest", 'std_scaler_pesorec.bin')))
+        joblib.dump(scaler, os.path.join(output_dir, "DeepNeuralNetwork", 'std_scaler_pesorec.bin'), compress=True)
+        print("\tStandard scaler saved in: " + str(os.path.join(output_dir, "DeepNeuralNetwork", 'std_scaler_pesorec.bin')))
 
     # Resampling TRAIN set
     if (resample != ''):
@@ -142,7 +150,7 @@ def train_dnn(train, output_dir):
     y_train = np_utils.to_categorical(y_train)
 
     batch_size = 64
-    epochs = 5
+    epochs = 50
 
     model = keras.models.Sequential()
     model.add(keras.layers.Dense(512, input_shape=input_shape, activation='relu'))
@@ -174,7 +182,7 @@ def train_dnn(train, output_dir):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser( description="Script to train a 'pesorec' classification model using RandomForest and optimized DNN. Usage example: $python train_model_pesorec.py dataPerinatal.csv -a DNN -o pathTo/ModelFolder")
+    parser = argparse.ArgumentParser( description="Script to train a 'pesorec' classification model with the entered dataset, and using RandomForest and/or optimized DNN. Resampling techniques can be applied like oversampling, undersampling and over/undersampling. Usage example: $python train_model_pesorec.py dataPerinatal.csv -a DNN -o pathTo/ModelFolder")
     parser.add_argument("input_pesorec_train",
                         help="Path to file with input training dataset for 'pesorec' classification. For example: 'dataPerinatal.csv'.")
     parser.add_argument("-rs", "--resample_method",
@@ -202,11 +210,16 @@ if __name__ == '__main__':
     train = pd.read_csv(input_pesorec_train, index_col=0)
 
     Path(os.path.join(output_dir, "Models")).mkdir(parents=True, exist_ok=True)
-    Path(os.path.join(output_dir, "Models", "RandomForest")).mkdir(parents=True, exist_ok=True)
-    Path(os.path.join(output_dir, "Models", "DeepNeuralNetwork")).mkdir(parents=True, exist_ok=True)
+    if (algorithm == 'RF'):
+        Path(os.path.join(output_dir, "Models", "RandomForest")).mkdir(parents=True, exist_ok=True)
+    elif (algorithm == 'DNN'):
+        Path(os.path.join(output_dir, "Models", "DeepNeuralNetwork")).mkdir(parents=True, exist_ok=True)
+    else:
+        Path(os.path.join(output_dir, "Models", "RandomForest")).mkdir(parents=True, exist_ok=True)
+        Path(os.path.join(output_dir, "Models", "DeepNeuralNetwork")).mkdir(parents=True, exist_ok=True)
 
     print("\nPreprocessing dataset before training...")
-    train = preprocess(train, resample, os.path.join(output_dir, "Models"))
+    train = preprocess(train, resample, algorithm, os.path.join(output_dir, "Models"))
 
     print("\nTraining 'pesorec' classification models...")
     if (algorithm == 'RF'):

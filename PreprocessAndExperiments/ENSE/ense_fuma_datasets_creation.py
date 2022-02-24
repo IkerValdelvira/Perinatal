@@ -63,7 +63,7 @@ def create_datasets_fuma_p(dataset_ENSE, dataset_compatible_p):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description="Script to create the ENSE datasets with 'fuma' class for women (mothers) and men (fathers). Two datasets are created for each sex: one containing all features of ENSE dataset, and other only with features compatibles with Perinatal dataset. Usage example: $python ense_fuma_datasets_creation.py dataENSE2017_converted.csv dataENSE2017_compatible_m.csv dataENSE2017_compatible_p.csv -o pathTo/AlcoholDatasets")
+    parser = argparse.ArgumentParser(description="Script to create the ENSE datasets with 'fuma' class for women (mothers) and men (fathers). Two datasets are created for each sex: one containing all features of ENSE dataset, and other only with features compatibles with Perinatal dataset. Usage example: $python ense_fuma_datasets_creation.py dataENSE2017_converted.csv dataENSE2017_compatible_m.csv dataENSE2017_compatible_p.csv -o pathTo/FumaDatasets")
     parser.add_argument("input_dataset", help="Path to file with input ENSE dataset: 'dataENSE2017_converted.csv'")
     parser.add_argument("input_dataset_compatible_m",
                         help="Path to file with input women ENSE dataset compatible with Perinatal dataset: 'dataENSE2017_compatible_m.csv'")
