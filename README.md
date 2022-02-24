@@ -129,7 +129,7 @@ Prototypes of predictive models trained are saved in [***models***](https://gith
 
 ## Project documentation:
 
-The documentation describing the work in this project can be found here: [TFG_PRAFAI_Memoria_IkerValdelvira.pdf](https://github.com/IkerValdelvira/Perinatal/blob/master/documentation/TFG_PRAFAI_Memoria_IkerValdelvira.pdf)
+The documentation describing the work in this project can be found here: [TFG_PRAFAI_Memoria_IkerValdelvira.pdf](https://github.com/IkerValdelvira/Perinatal/blob/master/documentation/Documentacion_Perinatal_IkerValdelvira.pdf)
 
 
 ## Author and contact:
